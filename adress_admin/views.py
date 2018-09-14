@@ -44,4 +44,6 @@ def del_adress_logic(request):
     except:
         traceback.print_exc()
     return redirect('adress_admin:adress_list')
-asdaadd
+asdaaddadsadads
+
+
