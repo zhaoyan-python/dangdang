@@ -1,0 +1,41 @@
+<style>
+	.t1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		width: 46%;
+		font-size: 12px;
+	}
+	.t2{
+		height: 30px;
+		padding-left: 42%;
+		
+	}
+	.t1,.t2{
+		height: 30px;
+	}
+</style>
+{% load static %}
+<table border="1" cellspacing="0" style="width: 100%;border-color:rgba(180,207,207,0.4)">
+	<tr>
+		<td class="t1">父类名称：</td>
+        <input type="hidden" name='id'value="{{ cate.0.id }}">
+		<td style="padding-left: 4px;"><input type="text" value="{{ category_name }}{{ cate.0.category_name }}"/></td>
+	</tr>
+	<tr>
+		<td class="t2" colspan="2">
+			<input type="button" value="提交" />
+			<input type="button" value="重置"/>
+		</td>
+	</tr>
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script>
+        $('input[value=提交]').click(function(){
+            location.href="{% url 'category_admin:add_cate1_logic' %}?category_name="+$('input:text').val()
+        })
+        $('input[value=重置]').click(function(){
+            location.href="{% url 'category_admin:add_cate1_logic' %}?category_name="+$('input:text').val()
+
+        })
+    </script>
+</table>

@@ -1,0 +1,108 @@
+<style>
+	.d1{
+		background-color: rgb(53,60,68);
+		position: relative;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+	}
+	.s1{
+		font-size: 12px;
+		color: white;
+	}
+	.s2{
+		position: absolute;
+		right: 10px;
+	}
+	.s2 a{
+		color: white;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.t1{
+		border-color:aliceblue;
+		margin-top: 2px;
+		font-size: 12px;
+		text-align: center;
+		background-color: rgb(230,242,254);
+	}
+	.bottom{
+		font-size: 13px;
+		padding-left: 15px;
+		position: relative;
+	}
+	.bs{
+		position: absolute;
+		right: 40px;
+	}
+	.bs a{
+		text-decoration: none;
+		color: black;
+	}
+	.bs a:hover{
+		color: cornflowerblue;
+		text-decoration: underline;
+	}
+</style>
+{% load static %}
+<div class="d1">
+	<span class="s1">订单管理</span>
+	<span class="s2">
+		<a href="{% url 'adress_admin:add_adress:add_adress_page' %}">添加</a>
+		<a id='del_adress'href="javascript:void(0)">删除</a>
+        <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+        <script>
+            var query_string=''
+            $('#del_adress').click(function(){
+
+                $('input:checked').parent().next().each(function (i) {
+                    query_string=query_string+'&id='+$(this).text()
+                })
+                loaction.href='{% url 'adress_admin:del_adress_logic' %}?flag=1'+query_string
+            })
+        </script>
+	</span>
+</div>
+<table border="2" width="100%" cellspacing="0" class="t1">
+	<tr>
+		<td>
+			<input type="checkbox" />
+		</td>
+		<td>地址ID</td>
+		<td>用户名</td>
+		<td>创建时间</td>
+		<td>收件人</td>
+		<td>手机号</td>
+	</tr>
+    {% for i in page.object_list %}
+        <tr>
+		<td>
+			<input type="checkbox" />
+		</td>
+		<td>{{ i.id }}</td>
+		<td>{{ i.user.user_name }}</td>
+		<td>{{ i.create_time}}</td>
+		<td>{{ i.name }}</td>
+		<td>{{ i.telephone }}</td>
+	</tr>
+
+    {% endfor %}
+</table>
+<div class="bottom">
+
+	共有{{ page.paginator.count }}条记录，当前第{{ page.number }}页，共{{ page.paginator.num_pages }} 页
+
+	<span class="bs">
+         {% if page.has_previous %}
+		<a href="{% url 'adress_admin:adress_list' %}?num={{ page.previous_page_number }}" style="margin-right: 20px;">上一页</a>
+        {% endif %}
+        {% for i in page.paginator.page_range %}
+            {% if i <= page.number|add:'2' and i >= page.number|add:'-2'%}
+            <a href="{% url 'adress_admin:adress_list' %}?num={{ i }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+		{% if page.has.next %}
+		<a href="{% url 'adress_admin:adress_list'%}?num={{ page.next_page_number }}">下一页</a>
+        {% endif %}
+	</span>
+</div>

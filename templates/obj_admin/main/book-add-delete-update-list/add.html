@@ -1,0 +1,189 @@
+<style>
+    {% load static%}
+	.table1{
+		border-color: lightgray;
+	}
+	.td1,.td2{
+		height: 36px;
+	}
+	.td1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		font-size: 14px;
+	}
+	.td2{
+		padding-left: 5px;
+	}
+</style>
+<table class="table1" border="1" cellspacing="0" width="1110px">
+    <form action="{% url 'obj_admin:add_book' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    <input type="hidden"name="book_id"value="{{ book.0.id }}">
+	<tr>
+		<td class="td1">book_name:</td>
+		<td class="td2"><input type="text"name="book_name" value="{{ book.0.book_name }}"/></td>
+	</tr>
+	<tr>
+		<td class="td1">author_name:</td>
+		<td class="td2"><input type="text"name="author_name" value="{{ book.0.author_name }}"/>
+		</td>
+	</tr>
+	<tr>
+		<td class="td1">publish_firm:</td>
+		<td class="td2"><input type="text" name="publish_firm" value="{{ book.0.publish_firm }}"/></td>
+	</tr>
+	<tr>
+		<td class="td1">cate:</td>
+		<td class="td2">
+			<select name="cate2">
+                <option value="{{ book.0.cate.category_name }}">{{ book.0.cate.category_name }}</option>
+                {% for i in cates2 %}
+				<option value="{{ i.category_name }}">{{ i.category_name}}</option>
+                {% endfor %}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="td1">publishing_date:</td>
+		<td class="td2">
+			<input type="date" name="publishing_date" value="{{ book.0.publishing_date }}"/>
+		</td>
+	</tr>
+    <tr>
+		<td class="td1">print_date:</td>
+		<td class="td2">
+			<input type="date"name="print_date" value="{{ book.0.print_date }}"/>
+		</td>
+	</tr>
+     <tr>
+		<td class="td1">print_num:</td>
+		<td class="td2">
+			<input type="text"name="print_num" value="{{ book.0.print_num }}"/>
+		</td>
+	</tr>
+          <tr>
+		<td class="td1">isbn:</td>
+		<td class="td2">
+			<input type="text" name="isbn"value="{{ book.0.isbn}}"/>
+		</td>
+	</tr>
+          <tr>
+		<td class="td1">font_num:</td>
+		<td class="td2">
+			<input type="text" name="'font_num" value="{{ book.0.font_num }}"/>
+		</td>
+	</tr>
+          <tr>
+		<td class="td1">page_num:</td>
+		<td class="td2">
+			<input type="text" name="page_num"value="{{ book.0.page_num }}"/>
+		</td>
+	</tr>
+          <tr>
+		<td class="td1">kaiben:</td>
+		<td class="td2">
+			<input type="text"name="kaiben" value="{{ book.0.kaiben}}"/>
+		</td>
+	</tr>
+          <tr>
+		<td class="td1">paper:</td>
+		<td class="td2">
+			<input type="text"name="paper" value="{{ book.0.paper }}"/>
+		</td>
+	</tr>
+          <tr>
+		<td class="td1">pack:</td>
+		<td class="td2">
+			<input type="text"name="pack"value="{{ book.0.pack }}" />
+		</td>
+	</tr>  <tr>
+		<td class="td1">price:</td>
+		<td class="td2">
+			<input type="text"name="price"value="{{ book.0.price }}" />
+		</td>
+	</tr>  <tr>
+		<td class="td1">dang_price:</td>
+		<td class="td2">
+			<input type="text"name="dang_price"value="{{ book.0.dang_price }}" />
+		</td>
+	</tr>  <tr>
+		<td class="td1">editor_recommend:</td>
+		<td class="td2">
+			<input type="text" name="editor_recommend"value="{{ book.0.editor_recommend }}"/>
+		</td>
+	</tr>  <tr>
+		<td class="td1">content_intro:</td>
+		<td class="td2">
+			<input type="text"name="content_intro"value="{{ book.0.author_intro }}" />
+		</td>
+	</tr>  <tr>
+		<td class="td1">author_intro:</td>
+		<td class="td2">
+			<input type="text" name="author_intro"value="{{ book.0.author_intro }}"/>
+		</td>
+	</tr>  <tr>
+		<td class="td1">catalogue:</td>
+		<td class="td2">
+			<input type="text"name="catalogue" value="{{ book.0.catalogue }}"/>
+		</td>
+	</tr>  <tr>
+		<td class="td1">media_comments:</td>
+		<td class="td2">
+			<input type="text"name="media_comments"value="{{ book.0.media_comments }}" />
+		</td>
+	</tr>  <tr>
+		<td class="td1">excerpt:</td>
+		<td class="td2">
+			<input type="text"name="excerpt" value="{{ book.0.excerpt }}"/>
+		</td>
+	</tr>
+	</tr>
+    <tr>
+		<td class="td1">customer_score:</td>
+		<td class="td2">
+			<input type="text" name="customer_score"value="{{ book.0.customer_score }}" />
+		</td>
+	</tr>  <tr>
+		<td class="td1">l_vrsion:</td>
+		<td class="td2">
+			<input type="text"name="l_vrsion" value="{{ book.0.l_vrsion }}"/>
+		</td>
+	</tr>  <tr>
+		<td class="td1">comment_times:</td>
+		<td class="td2">
+			<input type="text" name="comment_times" value="{{ book.0.comment_times }}"/>
+		</td>
+	</tr>
+        <tr>
+		<td class="td1">pic_url:</td>
+		<td class="td2">
+			<input id ="1"type="file" name="pic_url"/>
+		</td>
+	</tr>
+     <tr>
+		<td class="td1">book_total_count:</td>
+		<td class="td2">
+			<input type="text" name="book_total_count"value="{{ book.0.book_total_count }}"/>
+		</td>
+	</tr>
+   <tr>
+		<td class="td1">submit:</td>
+		<td class="td2">
+			<input type="button" value="submit"/>
+		</td>
+	</tr>
+        <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+        <script>
+            $('input[type=button]').click(function(){
+                var file=$('input[type=file]')[0].files[0]
+                var print_date=$('input[name=print_date]').val()
+                if(file &&  print_date){
+                    $('form').submit()
+                }else(
+                    alert('请重新上传图片和print_date')
+                )
+            })
+        </script>
+    </form>
+</table>

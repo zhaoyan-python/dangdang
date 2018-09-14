@@ -1,0 +1,55 @@
+<style>
+	.table1{
+		border-color:rgba(180,207,207,0.4);
+	}
+	.td1,.td2{
+		height: 36px;
+	}
+	.td1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		font-size: 14px;
+	}
+	.td2{
+		padding-left: 5px;
+	}	
+</style>
+{% load static %}
+<table class="table1" border="1" cellspacing="0" width="1110px">
+	<tr>
+		<td class="td1">子类名称:</td>
+        <input type="hidden"name='id'value="{{ cate.0.id }}">
+		<td class="td2"><input type="text"value="{{ category_name }}{{ cate.0.category_name }}" /></td>
+	</tr>
+	<tr>
+		<td class="td1">父类名称:</td>
+		<td class="td2">
+			<select>
+                {% if cate %}
+                    <option>{{ cate.0.category }}</option>
+                {% endif %}
+
+                {% for i in cate1 %}
+                    <option value="{{ i.category_name }}">{{ i.category_name }}</option>
+                {% endfor %}
+
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 24%;" colspan="2">
+			<input type="button" value="提交" />
+			<input type="button" value="重置"/>
+		</td>
+	</tr>
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script>
+        $('input[value=提交]').click(function(){
+            location.href="{% url 'category_admin:add_cate2_logic' %}?cate2_category_name="+$('input:text').val()+"&cate1_category_name="+$('option:selected').text()
+        })
+        $('input[value=重置]').click(function(){
+            location.href="{% url 'category_admin:reset_cate2_logic' %}?cate2_category_name="+$('input:text').val()
+        })
+    </script>
+</table>

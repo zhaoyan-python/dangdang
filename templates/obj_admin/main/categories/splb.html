@@ -1,0 +1,117 @@
+{% load static %}
+<style>
+	.d1{
+		background-color: rgb(53,60,68);
+		position: relative;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+	}
+	.s1{
+		font-size: 12px;
+		color: white;
+	}
+	.s2{
+		position: absolute;
+		right: 10px;
+	}
+	.s2 a{
+		color: white;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.t1{
+		border-color:aliceblue;
+		margin-top: 2px;
+		font-size: 12px;
+		text-align: center;
+		background-color: rgb(230,242,254);
+	}
+	.bottom{
+		font-size: 13px;
+		padding-left: 15px;
+		position: relative;
+	}
+	.bs{
+		position: absolute;
+		right: 40px;
+	}
+	.bs a{
+		text-decoration: none;
+		color: black;
+	}
+	.bs a:hover{
+		color: cornflowerblue;
+		text-decoration: underline;
+	}
+</style>
+<div class="d1">
+	<span class="s1">商品管理</span>
+	<span class="s2">
+		<a id='add_cate'href="javascript:void(0)">添加</a>
+		<a id='del_cate'href="javascript:void(0)">删除</a>
+	</span>
+</div>
+<table border="2" width="100%" cellspacing="0" class="t1">
+	<tr>
+        <td><input type="checkbox"></td>
+		<td>类别ID</td>
+		<td>类别名称</td>
+        <td>父类id</td>
+		<td>基本操作</td>
+	</tr>
+    {% for i in page.object_list %}
+        {% if not i.t_delete %}
+    <tr>
+        <td><input type="checkbox"></td>
+		<td>{{ i.id }}</td>
+		<td>{{ i.category_name }}</td>
+        <td>{{ i.parent_id.id }}</td>
+		<td><a id='update_cate'onclick="a({{ i.id }})"href="javascript:void(0)">跟新</a></td>
+	</tr>
+        {% endif %}
+    {% endfor %}
+</table>
+<div class="bottom">
+	共有{{ page.paginator.count }}条记录，当前第{{ page.number }}页，共{{ page.paginator.num_pages }} 页
+	<span class="bs">
+        {% if page.has_previous %}
+		<a href="{% url 'category_admin:cate_list' %}?num={{ page.previous_page_number }}" style="margin-right: 20px;">上一页</a>
+        {% endif %}
+    `   {% for i in page.paginator.page_range %}
+        {% if i >= page.number|add:'-2' and i <= page.number|add:'3'%}
+        <a href="{% url 'category_admin:cate_list' %}?num={{ i }}">{{ i }}</a>
+        {% endif  %}
+        {% endfor %}
+		{% if page.has_next%}
+		<a href="{% url 'category_admin:cate_list' %}?num={{ page.next_page_number }}">下一页</a>
+        {% endif %}
+	</span>
+</div>
+<script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+<script>
+    $('#add_cate').click(function(){
+        var cate=window.prompt('请问添加父类{1}还是子类{2}？')
+        if(cate='1'){
+            location.href="{% url 'category_admin:add_cate1' %}"
+        }else{
+            location.href="{% url 'category_admin:add_cate2' %}"
+        }
+    })
+    var query_string='';
+    $('#del_cate').click(function(){
+        $('input:checked').parent().next().each(function(i){
+            query_string=query_string+'&books_id='+$(this).val()
+            })
+        location.href="{% url 'category_admin:del_cate' %}?flag=1"+query_string
+
+    })
+    function a(a){
+        if($(this).parent().prev().text()){
+            location.href="{% url 'category_admin:add_cate2' %}?id="+a
+        }else{
+            location.href="{% url 'category_admin:add_cate1' %}?id="+a
+        }
+
+    }
+</script>
