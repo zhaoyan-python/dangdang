@@ -46,4 +46,3 @@ def del_adress_logic(request):
     return redirect('adress_admin:adress_list')
 
 
-
